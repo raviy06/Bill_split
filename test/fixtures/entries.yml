@@ -2,12 +2,14 @@
 
 one:
   event: MyString
-  event_date: 2017-03-27 15:09:01
+  event_date: 
+  description: MyText
   location: MyString
   total_amount: 1
 
 two:
   event: MyString
-  event_date: 2017-03-27 15:09:01
+  event_date: 
+  description: MyText
   location: MyString
   total_amount: 1

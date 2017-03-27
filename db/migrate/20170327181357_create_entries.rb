@@ -3,6 +3,7 @@ class CreateEntries < ActiveRecord::Migration[5.0]
     create_table :entries do |t|
       t.string :event
       t.datetime :event_date
+      t.text :description
       t.string :location
       t.integer :total_amount
 
