@@ -36,7 +36,10 @@
       <%= @entry.total_amount %>
     </p>
 
-     |
+    <% @guests.each do |guest| %>
+      <%= guest.name %> paid $<%= sprintf( "%0.02f", guest.amount_paid) %>. <%= guest.name %> should have paid $<%= sprintf( "%0.02f", guest.amount_should_have_paid) %>.
+      <br>
+    <% end %>
     
 
   </div>

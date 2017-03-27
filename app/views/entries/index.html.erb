@@ -5,10 +5,17 @@
 
 <div class="container">
   <div class="row">
+    <div class="col-md-4">Money Lent: <%= current_user.money_lent if !current_user.money_lent.nil? %></div>
+    <div class="col-md-4">Money Borrowed: <%= current_user.money_borrowed if !current_user.money_borrowed.nil? %></div>
+    <div class="col-md-4">Overall Balance: <%= @overall_balance %></div>
+  </div>
+  <div class="row">
     <div class="row">
       <div class="col-md-8"><h1>Entries</h1></div>
       <div class="col-md-4" style="margin-top: 20px;">
-        <%= link_to 'New Entry', new_entry_path, :class => "btn btn-success" %>
+        <% if user_signed_in? %>
+          <%= link_to 'New Entry', new_entry_path, :class => "btn btn-success" %>
+        <% end %>
       </div>
     </div>
     

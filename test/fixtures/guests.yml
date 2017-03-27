@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  belongs_to: 
+  amount_paid: 1.5
+  amount_should_have_paid: 1.5
+  name: MyString
+  email: MyString
+  user_id: 1
+
+two:
+  belongs_to: 
+  amount_paid: 1.5
+  amount_should_have_paid: 1.5
+  name: MyString
+  email: MyString
+  user_id: 1
