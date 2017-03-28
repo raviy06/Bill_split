@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  payee_id: 1
+  receiver_id: 1
+  amount_paid: 1.5
+
+two:
+  payee_id: 1
+  receiver_id: 1
+  amount_paid: 1.5

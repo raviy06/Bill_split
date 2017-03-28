@@ -3,7 +3,7 @@ class EntriesController < ApplicationController
   layout 'entries'
 
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
-  
+  before_action :logged_in, only: [:settle, :new, :edit]
 
   # GET /entries
   # GET /entries.json
@@ -25,6 +25,7 @@ class EntriesController < ApplicationController
 
   # GET /entries/1/edit
   def edit
+    @guests = @entry.guests
   end
 
   # POST /entries
@@ -32,8 +33,8 @@ class EntriesController < ApplicationController
   def create
     @entry = Entry.new(entry_params)
     
-    params[:entry][:user_id] = 1
-  
+    params[:entry][:user_id] = current_user.id
+
     respond_to do |format|
       if @entry.save
         Entry.distribute(@entry.id, params[:entry][:total_amount].to_i, params[:entry][:users])
@@ -49,14 +50,24 @@ class EntriesController < ApplicationController
   end
 
   def settle
-    Entry.settle(current_user)
+    if money_borrowed?
+      Entry.settle(current_user)
+      @settlements = Settlement.all.reject{|x| x.payee_id != current_user.id}.last(2)
+    else
+      redirect_to entries_path
+      flash[:notice] = "No settlement to be made."
+    end
+    
+
   end
 
   # PATCH/PUT /entries/1
   # PATCH/PUT /entries/1.json
   def update
+    params[:entry][:user_id] = current_user.id
     respond_to do |format|
       if @entry.update(entry_params)
+        Entry.distribute(@entry.id, params[:entry][:total_amount].to_i, params[:entry][:users])
         format.html { redirect_to @entry, notice: 'Entry was successfully updated.' }
         format.json { render :show, status: :ok, location: @entry }
       else
@@ -86,4 +97,20 @@ class EntriesController < ApplicationController
     def entry_params
       params.require(:entry).permit(:event, :event_date, :description, :location, :total_amount, :user_id, :users)
     end
+
+    def money_borrowed?
+      if current_user.money_borrowed > 0
+        return true
+      else
+        return false
+      end
+    end
+
+    def logged_in
+      unless user_signed_in?
+        redirect_to new_user_session_path
+        flash[:notice] = "Please Sign in to continue"
+      end
+    end
+
 end

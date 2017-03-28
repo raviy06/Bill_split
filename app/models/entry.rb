@@ -1,5 +1,6 @@
 class Entry < ApplicationRecord
 
+	validates :name, :total_amount, presence: :true
 	has_many :guests
 	has_many :users, :through => :guests
 
@@ -41,35 +42,39 @@ class Entry < ApplicationRecord
 	end
 
 	def self.settle(user)
-
+		puts user.money_borrowed
 		@users = User.all.reject{|x| x == user}
-		@amount_paid = 0
-		
+		@users.each do |x|
+			puts x.name
+			puts x.money_lent
+		end
+		money_borrowed =  user.money_borrowed
 		@users.each do |u|
-			
-			money_borrowed =  user.money_borrowed
+						
 			if money_borrowed > u.money_lent
 				money_borrowed_still_left = money_borrowed - u.money_lent			
-				@amount_paid = u.money_lent
 				
 				puts u.name + " " + "received" + " " + u.money_lent.to_s + " " + " from " + " " + user.name
+				Settlement.create(:receiver_id => u.id, :payee_id => user.id, :amount_paid => u.money_lent)
 				u.update_attributes(:money_lent => 0)
 				user.update_attributes(:money_borrowed => money_borrowed_still_left)
+
 			elsif u.money_lent > money_borrowed
 				money_still_left = u.money_lent - money_borrowed				
-				@amount_paid = money_borrowed
 
 				puts u.name + " " + "received" + " " + money_borrowed.to_s + " " + " from " + " " + user.name
+
+				Settlement.create(:receiver_id => u.id, :payee_id => user.id, :amount_paid => money_borrowed)
 				u.update_attributes(:money_lent => money_still_left)
 				user.update_attributes(:money_borrowed => 0)
 			else money_borrowed == u.money_lent				
-				@amount_paid = u.money_lent
 				puts u.name + " " + "received" + " " + u.money_lent.to_s + " " + " from " + " " + user.name
+				Settlement.create(:receiver_id => u.id, :payee_id => user.id, :amount_paid => u.money_lent)
 				u.update_attributes(:money_lent => 0)
 				user.update_attributes(:money_borrowed => 0)
 			end
 			
-			money_borrowed_still_left
+			money_borrowed = money_borrowed_still_left
 
 		end
 

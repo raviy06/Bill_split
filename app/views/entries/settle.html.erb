@@ -1,11 +1,20 @@
 <%= render 'shared/navbar' %>
+<div class="alert alert-info alert-dismissible" role="alert" style="margin-top: -19px;">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <%= notice %>
+</div>
 
-<h1> Everything will be settled here </h1>
+
+
 <br>
 <br>
 <div class="container">
+<h1> Your Account has been settled.</h1>
 	<ul>
-		<li><%= @user.name %> received Rs. <%= @amount_paid %> from <%= current_user %></li>
-		<li><%= @user.name %> received Rs. <%= @amount_paid %> from <%= current_user %></li>
+		
+			<% @settlements.each do |settlement| %>
+				<li><%= settlement.receiver.name %> received Rs. <%= settlement.amount_paid %> from <%= current_user.name %></li>
+			<% end %>
+		
 	</ul>
 </div>

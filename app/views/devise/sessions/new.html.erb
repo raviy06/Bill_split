@@ -16,6 +16,11 @@
 
 <%= render 'shared/navbar' %>
 
+<div class="alert alert-info alert-dismissible" role="alert" style="margin-top: -19px;">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <%= notice %>
+</div>
+
 <div class="container">
   <div class="row">
     <div class="col-md-4"></div>
@@ -25,18 +30,21 @@
         <br>
 
         <%= form_for(resource, as: resource_name, url: session_path(resource_name), :class => "form-horizontal") do |f| %>
-          <div class="field">
+
+          
+
+          <div class="form-group">
             <%= f.label :email %><br />
-            <%= f.email_field :email, autofocus: true %>
+            <%= f.email_field :email, autofocus: true, :class => "form-control" %>
           </div>
           <br>
-          <div class="field">
+          <div class="form-group">
             <%= f.label :password %><br />
-            <%= f.password_field :password, autocomplete: "off" %>
+            <%= f.password_field :password, autocomplete: "off", :class => "form-control" %>
           </div>
           <br>
           <% if devise_mapping.rememberable? -%>
-            <div class="field">
+            <div class="form-group">
               <%= f.check_box :remember_me %>
               <%= f.label :remember_me %>
             </div>
