@@ -15,7 +15,7 @@ class EntriesController < ApplicationController
   # GET /entries/1
   # GET /entries/1.json
   def show
-    @guests = @entry.users
+    @guests = @entry.guests
   end
 
   # GET /entries/new
@@ -46,6 +46,10 @@ class EntriesController < ApplicationController
       end
     end
 
+  end
+
+  def settle
+    Entry.settle(current_user)
   end
 
   # PATCH/PUT /entries/1
