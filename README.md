@@ -1,24 +1,13 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A simple bill splitting applcation
 
-Things you may want to cover:
+To run the applcation, follow these steps:
 
-* Ruby version
+1. Clone the repo
+2. Run `bundle install` inside the application folder.
+3. Run `rake db:create` to generate database.
+4. Run `rake db:migrate` to generate tables.
+5. Run `rake db:seed` to populate database with dummy user data.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+You can also access the live application at: https://morning-ravine-24917.herokuapp.com/
